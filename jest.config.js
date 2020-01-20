@@ -40,7 +40,7 @@ module.exports = {
     testRegex: ".*\\.test\\.ts$",
     globals: {
         "ts-jest": {
-            tsConfigFile: "tsconfig.json",
+            tsConfig: "tsconfig.json",
         }
     }
 };

@@ -346,7 +346,7 @@ describe('Given domain events should be assigned to corresponding aggregate stor
 
   }
 
-  class TestAggregate extends EventSourcedAggregateRoot {
+  class TestAggregate extends EventSourcedAggregateRoot<UuidIdentity> {
 
   }
 
@@ -405,7 +405,7 @@ describe('Given domain events should be assigned to corresponding aggregate stor
 
   it('Different aggregates', async () => {
 
-    class TestAggregate2 extends EventSourcedAggregateRoot {
+    class TestAggregate2 extends EventSourcedAggregateRoot<UuidIdentity> {
 
     }
 
@@ -617,7 +617,7 @@ it('Can be extended', async () => {
 
   }
 
-  class TestAggregate extends EventSourcedAggregateRoot {
+  class TestAggregate extends EventSourcedAggregateRoot<UuidIdentity> {
 
   }
 

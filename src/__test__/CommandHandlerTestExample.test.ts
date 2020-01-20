@@ -37,7 +37,7 @@ class OrderShipped implements DomainEvent {
 
 }
 
-class Order extends EventSourcedAggregateRoot {
+class Order extends EventSourcedAggregateRoot<OrderId> {
 
   public static create(id: OrderId) {
     const newOrder = new this(id);
@@ -55,10 +55,9 @@ class Order extends EventSourcedAggregateRoot {
   }
 
   @AggregateHandleEvent
-  public shipOrder(_event: OrderShipped) {
+  public shipOrder(_event: OrderShipped) { 
     this.shipped = true;
   }
-
 }
 
 class OrderCommandHandler implements CommandHandler {
@@ -237,7 +236,7 @@ it('Can test different aggregates at the same time', async () => {
     }
   }
 
-  class Customer extends EventSourcedAggregateRoot {
+  class Customer extends EventSourcedAggregateRoot<OrderId> {
     public hasOrdered(orderId: OrderId) {
       this.apply(new CustomerHasOrdered(orderId));
     }

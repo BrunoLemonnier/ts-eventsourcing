@@ -48,7 +48,8 @@ export interface TestTask {
   stack: StackFrame[];
 }
 
-export type ValueOrFactory<T, TB> = T | ((testBench: TB) => T);
+export type Factory<T, TB> = (testBench: TB) => T;
+export type ValueOrFactory<T, TB> = T | Factory<T, TB>;
 
 export type RepositoryReference = EventSourcedAggregateRootConstructor<any> | ReadModelConstructor<any> | string;
 
@@ -761,7 +762,7 @@ export class EventSourcingTestBench {
   }
 
   protected returnValue<T>(valueOrFactory: ValueOrFactory<T, this>): T {
-    return typeof valueOrFactory === 'function' ? valueOrFactory(this) : valueOrFactory;
+    return typeof valueOrFactory === 'function' ? (valueOrFactory as Factory<T, this>)(this) : valueOrFactory;
   }
 
   protected addTask(callback: () => Promise<void>, ignore: number = 1): this {

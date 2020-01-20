@@ -1,22 +1,11 @@
 import { Identity } from './Identity';
 
-export class ScalarIdentity<T> implements Identity {
+export class ScalarIdentity<V extends Object> implements Identity {
 
-  public static create<V, T extends ScalarIdentity<V>>(this: new (id: V) => T, value: V): T {
-    return new this(value);
+  constructor(private readonly id: V) {
   }
 
-  public static of(id: Identity) {
-    if (id instanceof this) {
-      return id;
-    }
-    return new this((id as any).getValue());
-  }
-
-  constructor(private readonly id: T) {
-  }
-
-  public getValue(): T {
+  public getValue(): V {
     return this.id;
   }
 

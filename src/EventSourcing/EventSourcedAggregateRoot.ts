@@ -5,7 +5,7 @@ import { DomainEvent } from '../Domain/DomainEvent';
 import { SimpleDomainEventStream } from '../Domain/SimpleDomainEventStream';
 import { DomainMessage } from '../Domain/DomainMessage';
 
-export interface EventSourcedAggregateRootConstructor<T extends EventSourcedAggregateRoot<Id> = EventSourcedAggregateRoot<Id>, Id extends Identity = Identity> {
+export interface EventSourcedAggregateRootConstructor<T extends EventSourcedAggregateRoot<Id>, Id extends Identity = Identity> {
   new(id: Id): T;
 }
 

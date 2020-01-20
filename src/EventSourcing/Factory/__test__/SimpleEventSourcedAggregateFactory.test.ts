@@ -1,6 +1,5 @@
 import { SimpleEventSourcedAggregateFactory } from '../SimpleEventSourcedAggregateFactory';
 import { EventSourcedAggregateRoot } from '../../EventSourcedAggregateRoot';
-import SpyInstance = jest.SpyInstance;
 import { ScalarIdentity } from '../../../ValueObject/ScalarIdentity';
 import { SimpleDomainEventStream } from '../../../Domain/SimpleDomainEventStream';
 import { Identity } from '../../../ValueObject/Identity';
@@ -8,13 +7,13 @@ import { DomainMessage } from '../../../Domain/DomainMessage';
 
 it('Can create an aggregate', async () => {
 
-  let spy: SpyInstance | null = null;
+  let overridenInitializeStateMethodSpy = jest.fn();
 
   class Aggregate extends EventSourcedAggregateRoot {
     constructor(aggregateId: Identity) {
       super(aggregateId);
-      spy = jest.spyOn(this, 'initializeState');
     }
+    initializeState = overridenInitializeStateMethodSpy
   }
 
   const factory = new SimpleEventSourcedAggregateFactory(Aggregate);
@@ -29,5 +28,5 @@ it('Can create an aggregate', async () => {
   ]);
   const aggregate = await factory.create(id, stream);
   expect(aggregate).toBeInstanceOf(Aggregate);
-  expect(spy).toBeCalledWith(stream);
+  expect(overridenInitializeStateMethodSpy).toBeCalledWith(stream);
 });
